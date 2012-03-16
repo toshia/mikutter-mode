@@ -24,8 +24,7 @@
    ＾＾；
 
 * 今後の機能追加予定
-** DONE imenu
-** DONE yasnippet
-** TODO 起動中のmikutterのプロセス上でpryとかruby-scratchみたいなことする
-** TODO C-c C-cとかで実行中のmikutterのプロセス上でカレントバッファのプラグインをリロード
-** TODO プラグインの枠だけ作る機能
+  - 起動中のmikutterのプロセス上でpryとかruby-scratchみたいなことする
+  - C-c C-cとかで実行中のmikutterのプロセス上でカレントバッファのプラグインをリロード
+  - プラグインの枠だけ作る機能
+  pull request絶賛受付中！
