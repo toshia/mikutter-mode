@@ -21,6 +21,9 @@
    mikutter用のスニペットです。これでサクサクコードが書けるようになるといいんですけどねぇ。
    絶賛追加中です。
 
+** 任意のコードをmikutter上で実行
+   M-x mikutter-console と実行してください。ruby-modeとmikutter-modeが有効になった状態で*mikutter-console*というバッファが表示されます。
+   ここにRubyコードを書いて C-c C-c とタイプすると、現在実行されているmikutterのプロセス上でそのコードが実行されます。
 ** プラグインリロード
    マイナーモードが有効になっていて、起動中のmikutterがこれに添付されているmikutter_modeプラグインをインストールしているとき C-c C-c とタイプすると、
    現在のバッファの内容が現在起動中のmikutter上で実行されます。
@@ -32,6 +35,6 @@
    mikutter_modeプラグインを使うには、dbus-rubyかなんかが要ります。gemとかで調達しましょう。
 
 * 今後の機能追加予定
-  - 起動中のmikutterのプロセス上でpryとかruby-scratchみたいなことする
+  - 起動中のmikutterのプロセス上でpryみたいなことする
   - プラグインの枠だけ作る機能
   pull request絶賛受付中！
