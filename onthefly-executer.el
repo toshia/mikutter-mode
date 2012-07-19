@@ -27,20 +27,36 @@
 (eval-when-compile (require 'cl))
 (require 'dbus)
 (require 'mikutter-utils)
-(defun onthefly-executer (ruby-code)
+(defun onthefly-executer (ruby-code &optional file)
   "Execute ruby code on mikutter"
-  (apply 'dbus-call-method
+  (dbus-call-method
     :session
     "org.mikutter.dynamic"
     "/org/mikutter/MyInstance"
     "org.mikutter.eval"
-    "ruby" (list ruby-code)))
+    "ruby" `(:array
+             (:struct "code" (:variant ,ruby-code))
+             (:struct :string "file" (:variant ,(or file "org.mikutter.eval"))))))
 
 (defun onthefly-executer-current-buffer ()
   (interactive)
   (let ((current-plugin (mikutter:current-plugin)))
     (when current-plugin
+      (message (concat "mikutter: plugin \"" current-plugin "\" uninstall."))
       (onthefly-executer (concat "Plugin.uninstall(:" current-plugin ")")))
-    (onthefly-executer (buffer-string))))
+    (onthefly-executer (buffer-string) (buffer-file-name))
+    (if current-plugin
+        (message (concat "mikutter: plugin \"" current-plugin "\" installed"))
+      (message "mikutter: executed"))))
+
+(defun mikutter:make-console-buffer ()
+  (with-current-buffer (get-buffer-create "*mikutter-console*")
+    (ruby-mode)
+    (mikutter-mode)
+    (current-buffer)))
+
+(defun mikutter-console ()
+  (interactive)
+  (pop-to-buffer (mikutter:make-console-buffer)))
 
 (provide 'onthefly-executer)
