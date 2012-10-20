@@ -1,0 +1,9 @@
+---
+slug: :mikutter_mode
+depends:
+  mikutter: 0.2.0.863
+  plugin: []
+version: '1.0'
+author: toshi_a
+name: mikutter mode
+description: mikutterを使う

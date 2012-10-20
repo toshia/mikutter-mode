@@ -27,8 +27,8 @@
 ;;編集中のプラグイン名を返す
 (defun mikutter:current-plugin ()
   (let ((bstr (buffer-string)))
-    (string-match "Plugin.create\s*\\(?:(:\\([a-zA-Z0-9_]+\\))\\|:\\([a-zA-Z0-9_]+\\)\\)" bstr)
-    (or (match-string 1 bstr) (match-string 2 bstr))))
+    (and (string-match "Plugin.create\s*\\(?:(:\\([a-zA-Z0-9_]+\\))\\|:\\([a-zA-Z0-9_]+\\)\\)" bstr)
+         (or (match-string 1 bstr) (match-string 2 bstr)))))
 
 (provide 'mikutter-utils)
 ;;; mikutter-utils.el ends here
