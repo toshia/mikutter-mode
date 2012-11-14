@@ -44,7 +44,10 @@
     (when current-plugin
       (message (concat "mikutter: plugin \"" current-plugin "\" uninstall."))
       (onthefly-executer (concat "Plugin.uninstall(:" current-plugin ")")))
-    (onthefly-executer (buffer-string) (buffer-file-name))
+    (let ((body (buffer-string)) (filename (buffer-file-name)))
+        (with-current-buffer (get-buffer-create "*mikutter-result*")
+          (ruby-mode)
+          (insert-string (onthefly-executer body filename) "\n")))
     (if current-plugin
         (message (concat "mikutter: plugin \"" current-plugin "\" installed"))
       (message "mikutter: executed"))))

@@ -21,11 +21,11 @@ Plugin.create(:mikutter_mode) do
           notice "ruby code execute: \n#{file || code}"
           r = Server.main.instance_eval(code, file || "mikutter-mode onthefly executer")
           notice "returns: \n#{r.inspect}"
-          [r.to_s]
+          [r.inspect]
         rescue Exception => e
           notice "exception:"
           notice e
-          [e.to_s] end end end end
+          [e.inspect] end end end end
 
   exported_obj = Server.new("/org/mikutter/MyInstance")
   service.export(exported_obj)
