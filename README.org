@@ -38,7 +38,17 @@
 #+BEGIN_SRC emacs-lisp
 (setq mikutter:dir "~/Documents/works/mikutter")
 #+END_SRC
-   M-x mikutter-boot でmikutterをデバッグモードで起動することができます。出力は*mikutter-log*バッファに表示されます
+   M-x mikutter-boot でmikutterをデバッグモードで起動することができます。出力は*mikutter-log*バッファに表示されます。
+
+** mikutter パースペクティブ
+   e2wm.elを使っている人は、以下のような設定をすると、任意のキーをtypeすれば（例ではC-c m）mikutterパースペクティブが使えます。
+#+BEGIN_SRC emacs-lisp
+(require 'e2wm-mikutter)
+(e2wm:add-keymap
+  e2wm:pst-minor-mode-keymap
+  '(("C-c m" . e2wm:dp-mikutter)))
+#+END_SRC
+   先の*mikutter-log* や、mikutterコンソールなども並べられています。俺専なので気に入ったらどうぞ。
 
    mikutter_modeプラグインを使うには、dbus-rubyかなんかが要ります。gemとかで調達しましょう。
 
