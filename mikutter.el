@@ -29,6 +29,9 @@
 (require 'mikutter-utils)
 (require 'onthefly-executer)
 
+(defcustom mikutter:dir nil "開発用 mikutter.rb のあるディレクトリ")
+(defvar mikutter:process nil "起動中のmikutterのプロセス")
+
 (easy-mmode-define-minor-mode mikutter-mode
   "mikutterコア・プラグイン開発用モード"
   nil
@@ -90,5 +93,17 @@
 (add-hook 'mikutter-mode-hook
              #'(lambda ()
                  (setq yas/mode-symbol 'mikutter)))
+
+;; キー押したらmikutter起動する奴
+(defun mikutter-boot ()
+  (interactive)
+  (when (and mikutter:process (eq 'run (process-status mikutter:process)))
+    (delete-process mikutter:process))
+  (let ((process-connection-type nil))
+    (with-current-buffer (get-buffer-create "*mikutter-log*")
+      (erase-buffer))
+    (setq mikutter:process
+          (start-process "mikutter-test-process" "*mikutter-log*"
+                         "ruby" (concat mikutter:dir "mikutter.rb") "--debug"))))
 
 (provide 'mikutter)
