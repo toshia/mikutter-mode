@@ -36,9 +36,9 @@
 ** mikutterを実行
    こんな設定を書いておけば
 #+BEGIN_SRC emacs-lisp
-	(setq mikutter:dir "~/Documents/works/mikutter")
+(setq mikutter:dir "~/Documents/works/mikutter")
 #+END_SRC
-   M-x mikutter-boot でmikutterをデバッグモードで起動することができます。出力は *mikutter-log* バッファに表示されます
+   M-x mikutter-boot でmikutterをデバッグモードで起動することができます。出力は*mikutter-log*バッファに表示されます
 
    mikutter_modeプラグインを使うには、dbus-rubyかなんかが要ります。gemとかで調達しましょう。
 
