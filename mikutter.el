@@ -36,9 +36,10 @@
   '(("\C-c\C-c" . onthefly-executer-current-buffer)))
 
 ;; mikutter mode自動で有効
-(add-hook-fn 'ruby-mode-hook
-             (if (and buffer-file-name (string-match "mikutter" buffer-file-name))
-                 (mikutter-mode)))
+(add-hook 'ruby-mode-hook
+          #'(lambda ()
+              (if (and buffer-file-name (string-match "mikutter" buffer-file-name))
+                  (mikutter-mode))))
 
 ;; imenu
 
