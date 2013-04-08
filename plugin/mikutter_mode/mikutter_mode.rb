@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 require 'dbus'
+require 'pp'
 
 Plugin.create(:mikutter_mode) do
   SERVICE_NAME = "org.mikutter.dynamic"
@@ -20,12 +21,12 @@ Plugin.create(:mikutter_mode) do
         begin
           notice "ruby code execute: \n#{file || code}"
           r = Server.main.instance_eval(code, file || "mikutter-mode onthefly executer")
-          notice "returns: \n#{r.inspect}"
-          [r.inspect]
+          notice "returns: \n#{r.pretty_inspect}"
+          [r.pretty_inspect]
         rescue Exception => e
           notice "exception:"
           notice e
-          [e.inspect] end end end end
+          [e.pretty_inspect] end end end end
 
   exported_obj = Server.new("/org/mikutter/MyInstance")
   service.export(exported_obj)

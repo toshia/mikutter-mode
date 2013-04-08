@@ -47,6 +47,7 @@
     (let ((body (buffer-string)) (filename (buffer-file-name)))
         (with-current-buffer (get-buffer-create "*mikutter-result*")
           (ruby-mode)
+		  (erase-buffer)
           (insert-string (onthefly-executer body filename) "\n")))
     (if current-plugin
         (message (concat "mikutter: plugin \"" current-plugin "\" installed"))
@@ -56,7 +57,7 @@
   (with-current-buffer (get-buffer-create "*mikutter-console*")
     (ruby-mode)
     (mikutter-mode)
-    (current-buffer)))
+	(current-buffer)))
 
 (defun mikutter-console ()
   (interactive)
