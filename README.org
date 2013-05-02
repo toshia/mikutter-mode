@@ -23,7 +23,8 @@
 
 ** 任意のコードをmikutter上で実行
    M-x mikutter-console と実行してください。ruby-modeとmikutter-modeが有効になった状態で*mikutter-console*というバッファが表示されます。
-   ここにRubyコードを書いて C-c C-c とタイプすると、現在実行されているmikutterのプロセス上でそのコードが実行されます。
+   ここにRubyコードを書いて C-c C-c とタイプすると、現在実行されているmikutterのプロセス上でそのコードが実行されます。また、リージョンで囲まれた領域があれば、その文字列を実行します。
+   それぞれ結果は、バッファ*mikutter-result* に出力されます。
 
 ** プラグインリロード
    マイナーモードが有効になっていて、起動中のmikutterがこれに添付されているmikutter_modeプラグインをインストールしているとき C-c C-c とタイプすると、

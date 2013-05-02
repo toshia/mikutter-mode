@@ -38,16 +38,17 @@
              (:struct "code" (:variant ,ruby-code))
              (:struct :string "file" (:variant ,(or file "org.mikutter.eval"))))))
 
-(defun onthefly-executer-current-buffer ()
-  (interactive)
+(defun onthefly-executer-current-buffer (&optional beg end)
+  (interactive "r")
   (let ((current-plugin (mikutter:current-plugin)))
     (when current-plugin
       (message (concat "mikutter: plugin \"" current-plugin "\" uninstall."))
       (onthefly-executer (concat "Plugin.uninstall(:" current-plugin ")")))
-    (let ((body (buffer-string)) (filename (buffer-file-name)))
+    (let ((body (if (region-active-p) (substring (buffer-string) (- beg 1) (- end 1)) (buffer-string))) (filename (buffer-file-name)))
         (with-current-buffer (get-buffer-create "*mikutter-result*")
           (ruby-mode)
 		  (erase-buffer)
+		  (insert-string (number-to-string beg)  " " (number-to-string end) " " body "\n")
           (insert-string (onthefly-executer body filename) "\n")))
     (if current-plugin
         (message (concat "mikutter: plugin \"" current-plugin "\" installed"))
