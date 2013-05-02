@@ -50,7 +50,7 @@
   (let ((index-alist '()) (case-fold-search nil)
         name next pos decl sing)
     (goto-char beg)
-    (while (re-search-forward "^\\s *\\(\\(class\\>\\(\\s *<<\\)?\\|module\\>\\)\\s *\\([^\(<\n ]+\\)\\|\\(def\\|alias\\)\\>\\s *\\([^\(\n ]+\\)\\|Plugin.create[ (]:\\(.*+\\)[ )]\\|\\(on\\|filter\\|hook\\)_?\\([a-zA-Z0-9_]+\\)\\)" end t)
+    (while (re-search-forward "^\\s *\\(\\(class\\>\\(\\s *<<\\)?\\|module\\>\\)\\s *\\([^\(<\n ]+\\)\\|\\(def\\|alias\\)\\>\\s *\\([^\(\n ]+\\)\\|Plugin.create[ (]:\\([^)]*+\\)[ )]\\|\\(on\\|filter\\|hook\\)_?\\([a-zA-Z0-9_]+\\)\\)" end t)
       (setq sing (match-beginning 3))
       (setq decl (or (match-string 5) (match-string 8)))
       (setq next (match-end 0))
