@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: defevent
+# key: defevent
+# --
+defevent :${1:event_name},
+priority: ${2:$$(yas/choose-value '(":ui_favorited" ":routine_passive" ":ui_passive" ":routine_active" ":ui_response"))},
+prototype: [$3]

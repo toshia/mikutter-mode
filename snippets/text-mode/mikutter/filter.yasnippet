@@ -3,5 +3,5 @@
 # --
 filter_${1:filter_name} do |$2|
 	$0
-	[${2:$(mapconcat 'identity (ruby-arglist-split text) ", ")}]
+	[${2:$(mapconcat 'identity (ruby-arglist-split yas-text) ", ")}]
 end

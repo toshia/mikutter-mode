@@ -92,7 +92,7 @@
 
 (add-hook 'mikutter-mode-hook
              #'(lambda ()
-                 (setq yas/mode-symbol 'mikutter-mode)))
+                 (add-to-list 'yas-extra-modes 'mikutter-mode)))
 
 ;; キー押したらmikutter起動する奴
 (defun mikutter-boot ()
