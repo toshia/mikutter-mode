@@ -3,6 +3,7 @@
 # name: define event filter
 # --
 filter_${1:filter_name} do |$2|
-	$0
-	[${2:$(mapconcat 'identity (ruby-arglist-split yas-text) ", ")}]
+  $3
+  [${2:$(mapconcat 'identity (ruby-arglist-split yas-text) ", ")}]
 end
+$0
