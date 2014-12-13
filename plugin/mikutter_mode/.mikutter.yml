@@ -1,9 +1,9 @@
 ---
 slug: :mikutter_mode
 depends:
-  mikutter: '3.0'
+  mikutter: '3.1'
   plugin: []
-version: '1.0'
+version: '1.1'
 author: toshi_a
 name: mikutter mode
 description: mikutterを使う
