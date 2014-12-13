@@ -54,6 +54,24 @@
         (message (concat "mikutter: plugin \"" current-plugin "\" installed"))
       (message "mikutter: executed"))))
 
+(defun onthefly-executer-within-current-plugin (&optional specified-plugin)
+  (interactive)
+  (let ((target-plugin (or specified-plugin (mikutter:current-plugin))))
+	(if target-plugin
+		(progn
+		  (mikutter-boot `("--debug" ,(concat "--plugin=" target-plugin ",mikutter_mode") ,(concat "--confroot=" (mikutter:create-plugin-preview-space target-plugin))))
+		  (message (concat "mikutter: plugin was detected. (" target-plugin ")")))
+	  (message "mikutter: plugin does not detected."))))
+
+(defun mikutter:get-plugin-preview-space (slug)
+  (concat "/tmp/.mikutter-profile-" slug))
+
+(defun mikutter:create-plugin-preview-space (slug)
+  (let ((newdir (mikutter:get-plugin-preview-space slug)))
+	(unless (file-exists-p newdir)
+	  (copy-directory "~/.mikutter/" newdir))
+	newdir))
+
 (defun mikutter:make-console-buffer ()
   (with-current-buffer (get-buffer-create "*mikutter-console*")
     (ruby-mode)

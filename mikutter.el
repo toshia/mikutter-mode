@@ -36,7 +36,8 @@
   "mikutterコア・プラグイン開発用モード"
   nil
   " Mikutter"
-  '(("\C-c\C-c" . onthefly-executer-current-buffer)))
+  '(("\C-c\C-c" . onthefly-executer-current-buffer)
+	("\C-c\C-e" . onthefly-executer-within-current-plugin)))
 
 ;; mikutter mode自動で有効
 (add-hook 'ruby-mode-hook
@@ -95,15 +96,19 @@
                  (add-to-list 'yas-extra-modes 'mikutter-mode)))
 
 ;; キー押したらmikutter起動する奴
-(defun mikutter-boot ()
+(defun mikutter-boot (&optional arguments)
   (interactive)
   (when (and mikutter:process (eq 'run (process-status mikutter:process)))
     (delete-process mikutter:process))
   (let ((process-connection-type nil))
     (with-current-buffer (get-buffer-create "*mikutter-log*")
       (erase-buffer))
+	(message (concat "mikutter: start process: ruby " mikutter:dir "mikutter.rb " (apply #'concat arguments)))
     (setq mikutter:process
-          (start-process "mikutter-test-process" "*mikutter-log*"
-                         "ruby" (concat mikutter:dir "mikutter.rb") "--debug"))))
+          (apply #'start-process `("mikutter-test-process"
+								   "*mikutter-log*"
+								   "ruby"
+								   ,(concat mikutter:dir "mikutter.rb")
+								   . ,(or arguments '("--debug")))))))
 
 (provide 'mikutter)
