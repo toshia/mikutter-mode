@@ -4,6 +4,7 @@
 
 ;; Author: Toshiaki Asai <toshi.alternative@gmail.com> @toshi_a
 ;; Keywords: convenience, files
+;; Package-Requires: ((cl-lib "0.5"), (yasnippets "0.8.0"), (ruby-mode "1.2"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
