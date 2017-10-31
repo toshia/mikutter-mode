@@ -31,6 +31,7 @@
 (require 'onthefly-executer)
 
 (defcustom mikutter:dir nil "開発用 mikutter.rb のあるディレクトリ")
+(defcustom mikutter:confroot "~/.mikutter/" "デバッグ用 confroot")
 (defvar mikutter:process nil "起動中のmikutterのプロセス")
 
 (easy-mmode-define-minor-mode mikutter-mode
@@ -110,6 +111,26 @@
 								   "*mikutter-log*"
 								   "ruby"
 								   ,(concat mikutter:dir "mikutter.rb")
-								   . ,(or arguments '("--debug")))))))
+								   . ,(or arguments (list "--debug" (concat "--confroot=" (mikutter-confroot-auto-select)))))))))
+
+(defun mikutter-confroot-auto-select ()
+  (interactive)
+  (let* ((branch-name (shell-command-to-string (concat "git --git-dir=" (file-name-as-directory mikutter:dir) ".git/ rev-parse --abbrev-ref HEAD")))
+		 (sanitized (mikutter-branch-name-sanitize branch-name))
+		 (dirname (concat "/tmp/mikutter-confroots/" sanitized)))
+	(when (not (file-accessible-directory-p dirname))
+	  (make-directory dirname t)
+	  (mikutter-confroot-mirror mikutter:confroot dirname))
+	dirname))
+(defun mikutter-branch-name-sanitize (branch-name)
+  (replace-regexp-in-string "[\n\r]" "" branch-name))
+(defmacro mikutter-confroot-copy (target)
+  `(shell-command
+	(concat "cp -r "
+			(file-name-as-directory src) ,target " "
+			(file-name-as-directory dest))))
+(defun mikutter-confroot-mirror (src dest)
+  (mikutter-confroot-copy "plugin/")
+  (mikutter-confroot-copy "settings/"))
 
 (provide 'mikutter)
