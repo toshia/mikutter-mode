@@ -107,17 +107,33 @@
       (erase-buffer))
 	(message (concat "mikutter: start process: ruby " mikutter:dir "mikutter.rb " (apply #'concat arguments)))
     (setq mikutter:process
-          (apply #'start-process `("mikutter-test-process"
+		  (apply #'start-process `("mikutter-test-process"
 								   "*mikutter-log*"
 								   "ruby"
 								   ,(concat mikutter:dir "mikutter.rb")
-								   . ,(or arguments (list "--debug" (concat "--confroot=" (mikutter-confroot-auto-select)))))))))
+								   . ,(or arguments (list "--debug")))))))
+
+(defun mikutter-boot-local (&optional arguments)
+  (interactive)
+  (when (and mikutter:process (eq 'run (process-status mikutter:process)))
+    (delete-process mikutter:process))
+  (let ((process-connection-type nil))
+    (with-current-buffer (get-buffer-create "*mikutter-log*")
+      (erase-buffer))
+	(message (concat "mikutter: start process: ruby " mikutter:dir "mikutter.rb " (apply #'concat arguments)))
+    (setq mikutter:process
+		  (let ((process-environment (cons (concat "MIKUTTER_CONFROOT=" (mikutter-confroot-auto-select)) process-environment)))
+			(apply #'start-process `("mikutter-test-process"
+									 "*mikutter-log*"
+									 "ruby"
+									 ,(concat mikutter:dir "mikutter.rb")
+									 . ,(or arguments (list "--debug"))))))))
 
 (defun mikutter-confroot-auto-select ()
   (interactive)
   (let* ((branch-name (shell-command-to-string (concat "git --git-dir=" (file-name-as-directory mikutter:dir) ".git/ rev-parse --abbrev-ref HEAD")))
 		 (sanitized (mikutter-branch-name-sanitize branch-name))
-		 (dirname (concat "/tmp/mikutter-confroots/" sanitized)))
+		 (dirname (if (string= "master" sanitized) (expand-file-name mikutter:confroot) (concat "/tmp/mikutter-confroots/" sanitized))))
 	(when (not (file-accessible-directory-p dirname))
 	  (make-directory dirname t)
 	  (mikutter-confroot-mirror mikutter:confroot dirname))
