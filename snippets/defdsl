@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: defdsl
+# key: defdsl
+# --
+defdsl :${1:dsl method name} do |${2:args}|
+$0
+end

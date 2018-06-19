@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: defactivity
+# key: defactivity
+# --
+defactivity :${1:activity_slug}, ${2:'名前'}

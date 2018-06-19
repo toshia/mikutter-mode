@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: intent
+# key: intent
+# --
+intent ${1:Model}, label: $2 do |intent_token|
+  $0
+end

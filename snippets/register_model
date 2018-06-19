@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: register_model
+# key: register_model
+# --
+register :$1, name: "$2"

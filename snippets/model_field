@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: model_field
+# key: model_field
+# --
+field.${1:$$(yas/choose-value '("string" "time" "uri" "int" "has"))} :${2:name}, required: true
+model_field$0

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: model handle
+# key: handle
+# --
+handle ${1:condition} do |uri|
+  $0
+end

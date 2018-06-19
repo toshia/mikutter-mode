@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: temporary tab
+# key: tmptab
+# --
+tab(:${1:slug}, "$2") do
+  temporary_tab
+  set_deletable true
+  $0
+end

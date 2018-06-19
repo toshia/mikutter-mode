@@ -8,5 +8,5 @@ command(:${1:slug},
         condition: lambda{ |opt| ${4:$$(yas/choose-value '("true" "opt.messages.size == 1" "opt.messages.size == 1 && opt.messages.first.repliable?" "opt.messages.size == 1 && opt.widget.selected_text(opt.messages.first)" "opt.messages.all? &:repliable?" "opt.messages.all? { |m| m.retweetable? and not m.retweeted_by_me? }" "opt.messages.all?{ |m| m.favoritable? and not m.favorited_by_me? }"))} },
         visible: true,
         role: :${3:$$(yas/choose-value '("timeline" "postbox" "tab" "pane" "window" "profile" "profiletab"))}) do |opt|
-	$0
+  $0
 end

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: worlds
+# key: worlds
+# --
+Enumerator.new{|y| Plugin.filtering(:worlds, y) }

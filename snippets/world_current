@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Current World
+# key: world_current
+# --
+${1:world}, = Plugin.filtering(:world_current, nil)

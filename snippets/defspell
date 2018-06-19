@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: defspell
+# key: defspell
+# --
+defspell(:${1:spell-name}, ${2:list of model slug},
+         condition: ->(${2:$(mikutter:defspell-arguments yas-text)}){
+           ${3:condition}
+         }) do |${2:$(mikutter:defspell-arguments yas-text)}|
+  $0
+end

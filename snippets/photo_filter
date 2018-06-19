@@ -1,0 +1,6 @@
+# key: photo
+# name: photo_filter
+# --
+Enumerator.new{ |y|
+  Plugin.filtering(:photo_filter, ${1:photo_uri_or_path}, y)
+}.first
