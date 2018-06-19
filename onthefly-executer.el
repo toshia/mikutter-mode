@@ -48,8 +48,8 @@
         (with-current-buffer (get-buffer-create "*mikutter-result*")
           (ruby-mode)
 		  (erase-buffer)
-		  (insert-string (number-to-string beg)  " " (number-to-string end) " " body "\n")
-          (insert-string (onthefly-executer body filename) "\n")))
+		  (insert (number-to-string beg)  " " (number-to-string end) " " body "\n")
+          (insert (onthefly-executer body filename) "\n")))
     (if current-plugin
         (message (concat "mikutter: plugin \"" current-plugin "\" installed"))
       (message "mikutter: executed"))))
