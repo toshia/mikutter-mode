@@ -29,6 +29,7 @@
 
 (require 'mikutter-utils)
 (require 'onthefly-executer)
+(require 'cl-lib)
 
 (defcustom mikutter:dir nil "開発用 mikutter.rb のあるディレクトリ")
 (defcustom mikutter:confroot "~/.mikutter/" "デバッグ用 confroot")
@@ -90,6 +91,45 @@
                       next beg) index-alist))
         (goto-char beg))))
     index-alist))
+
+;; company
+(defun company-advanced--make-candidate (candidate)
+  (let ((text (car candidate))
+        (meta (cadr candidate)))
+    (propertize text 'meta meta)))
+
+(defun company-advanced--candidates (prefix)
+  (let (res)
+    (dolist (item (mikutter:events))
+      (when (string-prefix-p prefix item)
+        (push (company-advanced--make-candidate (list item "event")) res)))
+    res))
+
+(defun company-advanced--meta (candidate)
+  (format "This will use %s of %s"
+          (get-text-property 0 'meta candidate)
+          (substring-no-properties candidate)))
+
+(defun company-advanced--annotation (candidate)
+  (format " (%s)" (get-text-property 0 'meta candidate)))
+
+(defun mikutter:company-event-backend (command &optional arg &rest ignored)
+  (interactive (list 'interactive))
+  (cl-case command
+    (interactive (company-begin-backend 'mikutter:company-event-backend))
+    (prefix (mikutter:company-grab-line-cond "Plugin\\.call(:\\(.*\\)"
+                                             "filter_\\(.*\\)"
+                                             "on_\\(.*\\)"
+                                             "on\\(.*\\)"))
+    (candidates (seq-filter (lambda (s) (string-prefix-p arg s))
+                            (mikutter:events)))
+    (annotation " (event)")
+    (meta (company-advanced--meta arg))))
+
+(eval-after-load "company"
+  (add-hook 'mikutter-mode-hook
+            #'(lambda ()
+                (add-to-list 'company-backends 'mikutter:company-event-backend))))
 
 ;; yasnippet
 

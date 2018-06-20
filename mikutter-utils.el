@@ -44,5 +44,33 @@
 						   x))
 					   model-slugs) ", ")))
 
+(defun mikutter:events ()
+  (condition-case err
+      (split-string (substring (onthefly-executer "Pluggaloid::Event.instances.map(&:name).join(' ')") 1 -1))
+    ((dbus-error) nil)))
+
+(defmacro mikutter:string-prefix-cond (target-string &rest causes)
+  `(let ((mikutter:string-prefix-cond:input ,target-string))
+     (cond
+      ,@(seq-map (lambda (cause)
+                   `((string-prefix-p ,cause mikutter:string-prefix-cond:input)
+                     (substring mikutter:string-prefix-cond:input ,(length cause))))
+                 causes))))
+
+(defmacro mikutter:company-grab-line-cond (&rest causes)
+  `(mikutter:conda
+    ,@(seq-map (lambda (cause)
+                 `((company-grab-line ,cause 1)
+                   it))
+               causes)))
+
+(defmacro mikutter:conda (&rest causes)
+  `(let (it)
+     (cond
+      ,@(seq-map (lambda (cause)
+                   (cons `(setq it ,(car cause))
+                         (cdr cause)))
+                 causes))))
+
 (provide 'mikutter-utils)
 ;;; mikutter-utils.el ends here
