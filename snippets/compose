@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: compose
+# key: compose
+# --
+compose(${1:world}${2:, message},
+        body: ${3:description})
