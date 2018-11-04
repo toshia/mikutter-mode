@@ -3,10 +3,13 @@
 # name: mikutter command
 # contributor: toshi_a
 # --
-command(:${1:slug},
-        name: '$2',
-        condition: lambda{ |opt| ${4:$$(yas/choose-value '("true" "opt.messages.size == 1" "opt.messages.size == 1 && opt.messages.first.repliable?" "opt.messages.size == 1 && opt.widget.selected_text(opt.messages.first)" "opt.messages.all? &:repliable?" "opt.messages.all? { |m| m.retweetable? and not m.retweeted_by_me? }" "opt.messages.all?{ |m| m.favoritable? and not m.favorited_by_me? }"))} },
+command(:${1:$$(or (mikutter:current-plugin) "slug")},
+        name: '${2:$1}',
+        condition: ->opt{ ${4:$$(yas/choose-value '("true" "opt.messages.size == 1" "opt.messages.size == 1 && opt.messages.first.repliable?" "opt.messages.size == 1 && opt.widget.selected_text(opt.messages.first)" "opt.messages.all? &:repliable?" "opt.messages.all? { |m| m.retweetable? and not m.retweeted_by_me? }" "opt.messages.all?{ |m| m.favoritable? and not m.favorited_by_me? }"))} },
         visible: true,
         role: :${3:$$(yas/choose-value '("timeline" "postbox" "tab" "pane" "window" "profile" "profiletab"))}) do |opt|
-  $0
+  ${6:${5:world}, = Plugin.filtering(:world_current, nil)
+  if world
+    $7
+  end}$0
 end
