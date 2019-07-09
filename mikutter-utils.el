@@ -46,7 +46,12 @@
 
 (defun mikutter:events ()
   (condition-case err
-      (split-string (substring (onthefly-executer "Pluggaloid::Event.instances.map(&:name).join(' ')") 1 -1))
+      (split-string (substring (onthefly-executer "Pluggaloid::Event.instances.map(&:name).join(' ')") 1 -2))
+    ((dbus-error) nil)))
+
+(defun mikutter:modelviewer-model-slugs ()
+  (condition-case err
+      (split-string (substring (onthefly-executer "Plugin.filtering(:modelviewer_models, Set.new).first.map(&:slug).sort.join(' ')") 1 -2))
     ((dbus-error) nil)))
 
 (defmacro mikutter:string-prefix-cond (target-string &rest causes)
