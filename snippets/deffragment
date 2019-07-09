@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: deffragment
+# key: deffragment
+# --
+deffragment(:${1:$$(yas/choose-value (mikutter:modelviewer-model-slugs))}, :${2:fragment-slug}, '${3:$2}') do |$1|
+  $0
+end
