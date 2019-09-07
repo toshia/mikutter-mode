@@ -31,6 +31,7 @@
 (require 'onthefly-executer)
 (require 'cl-lib)
 
+(defcustom mikutter:ruby "ruby -x" "mikutterを起動するのに使うrubyのパス")
 (defcustom mikutter:dir nil "開発用 mikutter.rb のあるディレクトリ")
 (defcustom mikutter:confroot "~/.mikutter/" "デバッグ用 confroot")
 (defvar mikutter:process nil "起動中のmikutterのプロセス")
@@ -139,13 +140,13 @@
   (let ((process-connection-type nil))
     (with-current-buffer (get-buffer-create "*mikutter-log*")
       (erase-buffer))
-	(message (concat "mikutter: start process: ruby " mikutter:dir "mikutter.rb " (apply #'concat arguments)))
+    (message (concat "mikutter: start process: ruby " mikutter:dir "mikutter.rb " (apply #'concat arguments)))
     (setq mikutter:process
-		  (apply #'start-process `("mikutter-test-process"
-								   "*mikutter-log*"
-								   "ruby"
-								   ,(concat mikutter:dir "mikutter.rb")
-								   . ,(or arguments (list "--debug")))))))
+          (apply #'start-process `("mikutter-test-process"
+                                   "*mikutter-log*"
+                                   ,@(split-string mikutter:ruby)
+                                   ,(concat mikutter:dir "mikutter.rb")
+                                   . ,(or arguments (list "--debug")))))))
 
 (defun mikutter-boot-local (&optional arguments)
   (interactive)
@@ -154,14 +155,14 @@
   (let ((process-connection-type nil))
     (with-current-buffer (get-buffer-create "*mikutter-log*")
       (erase-buffer))
-	(message (concat "mikutter: start process: ruby " mikutter:dir "mikutter.rb " (apply #'concat arguments)))
+    (message (concat "mikutter: start process: ruby " mikutter:dir "mikutter.rb " (apply #'concat arguments)))
     (setq mikutter:process
-		  (let ((process-environment (cons (concat "MIKUTTER_CONFROOT=" (mikutter-confroot-auto-select)) process-environment)))
-			(apply #'start-process `("mikutter-test-process"
-									 "*mikutter-log*"
-									 "ruby"
-									 ,(concat mikutter:dir "mikutter.rb")
-									 . ,(or arguments (list "--debug"))))))))
+          (let ((process-environment (cons (concat "MIKUTTER_CONFROOT=" (mikutter-confroot-auto-select)) process-environment)))
+            (apply #'start-process `("mikutter-test-process"
+                                     "*mikutter-log*"
+                                     ,@(split-string mikutter:ruby)
+                                     ,(concat mikutter:dir "mikutter.rb")
+                                     . ,(or arguments (list "--debug"))))))))
 
 (defun mikutter-confroot-auto-select ()
   (interactive)
