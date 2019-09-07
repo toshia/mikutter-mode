@@ -45,7 +45,7 @@
       (message (concat "mikutter: plugin \"" current-plugin "\" uninstall."))
       (onthefly-executer (concat "Plugin.uninstall(:" current-plugin ")")))
     (let ((body (if (region-active-p) (substring (buffer-string) (- beg 1) (- end 1)) (buffer-string))) (filename (buffer-file-name)))
-        (with-current-buffer (get-buffer-create "*mikutter-result*")
+      (with-current-buffer (pop-to-buffer "*mikutter-result*")
           (ruby-mode)
 		  (erase-buffer)
 		  (insert (number-to-string beg)  " " (number-to-string end) " " body "\n")
@@ -73,7 +73,7 @@
 	newdir))
 
 (defun mikutter:make-console-buffer ()
-  (with-current-buffer (get-buffer-create "*mikutter-console*")
+  (with-current-buffer (pop-to-buffer "*mikutter-console*")
     (ruby-mode)
     (mikutter-mode)
 	(current-buffer)))
