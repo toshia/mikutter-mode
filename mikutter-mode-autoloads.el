@@ -11,6 +11,10 @@
 mikutterコア・プラグイン開発用モード
 " t nil)
 
+(autoload 'mikutter-boot "mikutter" "\
+mikutterをデバッグモードで起動する
+" t nil)
+
 (if (fboundp 'register-definition-prefixes) (register-definition-prefixes "mikutter" '("mikutter-")))
 
 ;;;***

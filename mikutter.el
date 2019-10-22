@@ -134,6 +134,7 @@
 
 ;; キー押したらmikutter起動する奴
 (defun mikutter-boot (&optional arguments)
+  "mikutterをデバッグモードで起動する"
   (interactive)
   (when (and mikutter:process (eq 'run (process-status mikutter:process)))
     (delete-process mikutter:process))
