@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
+
 require 'dbus'
-require 'pp'
 
 Plugin.create(:mikutter_mode) do
   SERVICE_NAME = "org.mikutter.dynamic"
