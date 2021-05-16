@@ -130,7 +130,7 @@
     (annotation " (event)")
     (meta (company-advanced--meta arg))))
 
-(eval-after-load "company"
+(with-eval-after-load "company"
   (add-hook 'mikutter-mode-hook
             #'(lambda ()
                 (add-to-list 'company-backends 'mikutter:company-event-backend))))
