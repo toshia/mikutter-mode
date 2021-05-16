@@ -35,13 +35,22 @@
 (defcustom mikutter:dir nil "開発用 mikutter.rb のあるディレクトリ")
 (defcustom mikutter:confroot "~/.mikutter/" "デバッグ用 confroot")
 (defvar mikutter:process nil "起動中のmikutterのプロセス")
+(defcustom mikutter:snippet-command-conditions
+  '("true"
+    "opt.messages.size == 1"
+    "opt.messages.size == 1 && opt.messages.first.repliable?"
+    "opt.messages.size == 1 && opt.widget.selected_text(opt.messages.first)"
+    "opt.messages.all? &:repliable?"
+    "opt.messages.all? { |m| m.retweetable? && !m.retweeted_by_me? }"
+    "opt.messages.all? { |m| m.favoritable? && !m.favorited_by_me? }")
+  "commandスニペットで、condition:引数に渡される無名関数の内容の選択候補")
 
 (easy-mmode-define-minor-mode mikutter-mode
   "mikutterコア・プラグイン開発用モード"
   nil
   " Mikutter"
   '(("\C-c\C-c" . onthefly-executer-current-buffer)
-	("\C-c\C-e" . onthefly-executer-within-current-plugin)))
+    ("\C-c\C-e" . onthefly-executer-within-current-plugin)))
 
 ;; imenu
 
